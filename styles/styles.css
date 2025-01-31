@@ -1,0 +1,91 @@
+/* Убираем отступы по умолчанию и задаем высоту для html и body */
+html,
+body {
+  height: 100%; /* Страница должна занимать всю высоту экрана */
+  margin: 0; /* Убираем стандартные отступы */
+  display: flex;
+  flex-direction: column; /* Элементы на странице будут располагаться по вертикали */
+  font-family: "Poppins", sans-serif;
+}
+
+/* Стили для навигационной панели */
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(34, 44, 32);
+  padding: 10px 10px;
+}
+
+/* Стили для ссылок в навигации */
+.navbar a {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  margin-left: 20px;
+  font-size: 17px;
+}
+
+/* Стили при наведении на ссылку */
+.navbar a:hover {
+  color: #34d43c;
+}
+
+/* Контейнер для формы регистрации */
+.registration-container {
+  flex-grow: 1; /* Форму растягиваем на оставшееся пространство */
+  display: flex;
+  flex-direction: column; /* Содержимое формы будет располагаться вертикально */
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box; /* Учитываем отступы в ширине */
+}
+
+/* Заголовок формы */
+.registration-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Форма */
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  width: 300px;
+}
+
+/* Поле ввода */
+.registration-form input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Кнопка */
+.registration-form button {
+  padding: 10px;
+  font-size: 16px;
+  background-color: rgb(27, 146, 0);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Стили при наведении на кнопку */
+.registration-form button:hover {
+  background-color: rgb(21, 116, 0);
+}
+
+/* Стили футера */
+.footer {
+  background-color: rgb(35, 39, 34);
+  color: rgb(255, 255, 255);
+  text-align: center;
+  font-size: 14px;
+  padding: 10px; /* Отступы внутри футера */
+  width: 100%; /* Футер будет занимать всю ширину */
+  margin-top: auto; /* Сдвигаем футер в самый низ */
+}

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Site</title>
+    <link rel="stylesheet" href="styles/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <a href="#">Регистрация</a>
+      <a href="#">Покупка</a>
+    </nav>
+
+    <div class="registration-container">
+      <h2>Данные автомобиля</h2>
+      <form
+        class="registration-form"
+        action="http://localhost:3000/add-car"
+        method="POST"
+      >
+        <label for="brand">Бренд:</label>
+        <input
+          type="text"
+          id="brand"
+          name="brand"
+          placeholder="Введите бренд автомобиля"
+          required
+        />
+        <label for="model">Модель:</label>
+        <input
+          type="text"
+          id="model"
+          name="model"
+          placeholder="Введите модель автомобиля"
+          required
+        />
+        <label for="year">Год выпуска:</label>
+        <input
+          type="number"
+          id="year"
+          name="year"
+          placeholder="Введите год выпуска автомобиля"
+          min="1886"
+          max="2025"
+          required
+        />
+        <label for="price">Цена:</label>
+        <input
+          type="number"
+          id="price"
+          name="price"
+          placeholder="Введите цену автомобиля"
+          required
+        />
+        <label for="mileage">Пробег:</label>
+        <input
+          type="number"
+          id="mileage"
+          name="mileage"
+          placeholder="Введите пробег автомобиля"
+          required
+        />
+        <label for="fueltype">Тип топлива:</label>
+        <input
+          type="text"
+          id="fueltype"
+          name="fueltype"
+          placeholder="Введите тип топлива автомобиля"
+          required
+        />
+        <label for="transmission">Коробка передач:</label>
+        <input
+          type="text"
+          id="transmission"
+          name="transmission"
+          placeholder="Введите тип коробки передач"
+          required
+        />
+        <label for="description">Описание:</label>
+        <input
+          type="text"
+          id="description"
+          name="description"
+          placeholder="Введите дополнительное описание"
+          required
+        />
+        <button type="submit" id="submitButton">Внести машину</button>
+      </form>
+    </div>
+    <footer class="footer">
+      <p>Это моя нижняя панель. &copy; 2025</p>
+    </footer>
+    <script src="scripts/script.js"></script>
+  </body>
+</html>
