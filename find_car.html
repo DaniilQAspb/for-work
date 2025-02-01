@@ -33,81 +33,31 @@
       <h2>Найти автомобиль</h2>
       <form
         class="registration-form"
-        action="http://localhost:3000/add-car"
-        method="POST"
+        id="searchCarForm"
+        action="javascript:void(0);"
       >
-        <label for="brand">Бренд:</label>
+        <label for="car_id"></label>
+        <!-- Изменение: текст метки -->
         <input
           type="text"
-          id="brand"
-          name="brand"
-          placeholder="Введите бренд автомобиля"
+          id="car_id"
+          name="car_id"
+          placeholder="Введите ID автомобиля"
           required
         />
-        <label for="model">Модель:</label>
-        <input
-          type="text"
-          id="model"
-          name="model"
-          placeholder="Введите модель автомобиля"
-          required
-        />
-        <label for="year">Год выпуска:</label>
-        <input
-          type="number"
-          id="year"
-          name="year"
-          placeholder="Введите год выпуска автомобиля"
-          min="1886"
-          max="2025"
-          required
-        />
-        <label for="price">Цена:</label>
-        <input
-          type="number"
-          id="price"
-          name="price"
-          placeholder="Введите цену автомобиля"
-          required
-        />
-        <label for="mileage">Пробег:</label>
-        <input
-          type="number"
-          id="mileage"
-          name="mileage"
-          placeholder="Введите пробег автомобиля"
-          required
-        />
-        <label for="fueltype">Тип топлива:</label>
-        <input
-          type="text"
-          id="fueltype"
-          name="fueltype"
-          placeholder="Введите тип топлива автомобиля"
-          required
-        />
-        <label for="transmission">Коробка передач:</label>
-        <input
-          type="text"
-          id="transmission"
-          name="transmission"
-          placeholder="Введите тип коробки передач"
-          required
-        />
-        <label for="description">Описание:</label>
-        <input
-          type="text"
-          id="description"
-          name="description"
-          placeholder="Введите дополнительное описание"
-          required
-        />
-        <button type="submit" id="submitButton">Внести машину</button>
+        <button type="submit" id="submitButton">Найти машину</button>
       </form>
+
+      <!-- Поле для вывода ответа от сервера -->
+      <div id="carDetails" style="margin-top: 20px">
+        <!-- Ответ от сервера будет отображаться здесь -->
+      </div>
     </div>
+
     <footer class="footer">
       <p>Это моя нижняя панель. &copy; 2025</p>
     </footer>
     <script src="scripts/menu.js"></script>
+    <script src="scripts/searchCar.js"></script>
   </body>
 </html>
