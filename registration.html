@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="styles/form.css" />
+    <link rel="stylesheet" href="styles/base.css" />
+    <link rel="stylesheet" href="styles/footer.css" />
+    <link rel="stylesheet" href="styles/navbar.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="dropdown">
+        <a href="#" class="dropdown-toggle">Меню</a>
+        <div class="dropdown-content">
+          <a href="find_car.html">Найти автомобиль</a>
+          <a href="index.html">Добавить автомобиль</a>
+          <a href="update_car_put.html">Изменить характеристики</a>
+          <a href="update_car_patch.html">Изменить частично характеристики</a>
+          <a href="delete_car.html">Удалить автомобиль</a>
+        </div>
+        <a href="#">Вход</a>
+        <a href="#">Регистрация</a>
+      </div>
+    </nav>
+
+    <div class="registration-container">
+      <h2>Регистрация</h2>
+      <form class="registration-form" id="registrationForm">
+        <label for="username">Имя пользователя</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Введите имя"
+          required
+        />
+
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Введите email"
+          required
+        />
+
+        <label for="password">Пароль</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Введите пароль"
+          required
+        />
+
+        <button type="submit" id="submitButton">Зарегистрироваться</button>
+      </form>
+
+      <div id="registrationResponse" style="margin-top: 20px">
+        <!-- Ответ от сервера будет отображаться здесь -->
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p>Это моя нижняя панель. &copy; 2025</p>
+    </footer>
+
+    <script src="scripts/menu.js"></script>
+    <script src="scripts/registration.js"></script>
+  </body>
+</html>

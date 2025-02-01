@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 const { Pool } = require("pg");
+const bcrypt = require("bcrypt");
 const cors = require("cors");
 
 const pool = new Pool({
@@ -30,6 +31,75 @@ app.use(express.static(publicDir));
 // Главная страница
 app.get("/", (req, res) => {
   res.sendFile(path.join(publicDir, "index.html"));
+});
+
+// Регистрируем нового пользователя
+app.post("/register", async (req, res) => {
+  const { username, email, password } = req.body;
+
+  try {
+    // Проверка, существует ли уже пользователь с таким email
+    const checkUserQuery = "SELECT * FROM users WHERE email = $1";
+    const result = await pool.query(checkUserQuery, [email]);
+
+    if (result.rows.length > 0) {
+      return res.json({
+        success: false,
+        message: "Пользователь с таким email уже существует.",
+      });
+    }
+
+    // Хешируем пароль
+    const hashedPassword = await bcrypt.hash(password, 10); // 10 - это соль
+
+    // Добавление нового пользователя в базу данных
+    const query = `
+      INSERT INTO users (username, email, password)
+      VALUES ($1, $2, $3)
+      RETURNING *;
+    `;
+    const newUser = await pool.query(query, [username, email, hashedPassword]);
+
+    res.json({
+      success: true,
+      message: "Пользователь успешно зарегистрирован.",
+      user: newUser.rows[0],
+    });
+  } catch (err) {
+    console.error("Ошибка при регистрации пользователя:", err.message);
+    res.status(500).json({
+      success: false,
+      message: "Ошибка при регистрации пользователя.",
+    });
+  }
+});
+
+// Получение списка всех пользователей
+app.get("/users", async (req, res) => {
+  try {
+    const query = "SELECT user_id, username, email FROM users"; // Запрос для получения пользователей без паролей
+    const result = await pool.query(query);
+
+    if (result.rows.length === 0) {
+      return res.json({
+        success: false,
+        message: "Нет пользователей в системе.",
+      });
+    }
+
+    res.json({
+      success: true,
+      users: result.rows, // Отправляем список пользователей
+    });
+  } catch (err) {
+    console.error("Ошибка при получении списка пользователей:", err.message);
+    res
+      .status(500)
+      .json({
+        success: false,
+        message: "Ошибка при получении списка пользователей.",
+      });
+  }
 });
 
 // Запуск сервера
