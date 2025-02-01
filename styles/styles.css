@@ -13,21 +13,22 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(34, 44, 32);
+  background-color: #ffffff; /* Белый фон */
+  border-bottom: 1px solid #000000; /* Тонкая граница */
   padding: 10px 10px;
 }
 
 /* Стили для ссылок в навигации */
 .navbar a {
   text-decoration: none;
-  color: rgb(255, 255, 255);
+  color: #333; /* Тёмный текст */
   margin-left: 20px;
   font-size: 17px;
 }
 
 /* Стили при наведении на ссылку */
 .navbar a:hover {
-  color: #34d43c;
+  color: #fa8500;
 }
 
 /* Контейнер для формы регистрации */
@@ -67,7 +68,7 @@ body {
 .registration-form button {
   padding: 10px;
   font-size: 16px;
-  background-color: rgb(27, 146, 0);
+  background-color: rgb(121, 88, 0);
   color: white;
   border: none;
   border-radius: 5px;
@@ -76,13 +77,14 @@ body {
 
 /* Стили при наведении на кнопку */
 .registration-form button:hover {
-  background-color: rgb(21, 116, 0);
+  background-color: rgba(216, 132, 5, 0.755);
 }
 
 /* Стили футера */
 .footer {
-  background-color: rgb(35, 39, 34);
-  color: rgb(255, 255, 255);
+  background-color: #f1f1f1; /* Светлый фон */
+  color: #333;
+  border-top: 1px solid #000000;
   text-align: center;
   font-size: 14px;
   padding: 10px; /* Отступы внутри футера */
