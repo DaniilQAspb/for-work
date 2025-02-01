@@ -9,26 +9,87 @@ body {
 }
 
 /* Стили для навигационной панели */
+/* Основные стили для навигации */
 .navbar {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #382222; /* Белый фон */
-  border-bottom: 1px solid #000000; /* Тонкая граница */
-  padding: 10px 10px;
+  background-color: #382222;
+  border-bottom: 2px solid #fa8500;
+  padding: 12px 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Стили для ссылок в навигации */
 .navbar a {
   text-decoration: none;
-  color: #ffffff; /* Тёмный текст */
-  margin-left: 20px;
-  font-size: 17px;
+  color: #ffffff;
+  margin-left: 25px;
+  font-size: 18px;
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
 }
 
-/* Стили при наведении на ссылку */
+/* Эффект при наведении на ссылку */
 .navbar a:hover {
   color: #fa8500;
+  transform: scale(1.1);
+}
+
+/* Стили для выпадающего меню */
+.dropdown {
+  position: relative;
+}
+
+/* Стили для кнопки выпадающего меню */
+.dropdown-toggle {
+  cursor: pointer;
+}
+
+/* Скрытие контента выпадающего меню по умолчанию */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #382222;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+/* Показ контента, когда класс active добавлен */
+.dropdown.active .dropdown-content {
+  display: block;
+  animation: dropdownAnimation 0.3s ease-in-out;
+}
+
+/* Стили для ссылок в выпадающем меню */
+.dropdown-content a {
+  color: #ffffff;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 16px;
+}
+
+/* Эффект при наведении на ссылку в выпадающем меню */
+.dropdown-content a:hover {
+  background-color: #fa8500;
+  color: #ffffff;
+}
+
+/* Анимация для выпадающего меню */
+@keyframes dropdownAnimation {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Контейнер для формы регистрации */

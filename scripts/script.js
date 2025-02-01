@@ -1,25 +1,25 @@
-/*
-// Найдем кнопку по ID
-const submitButton = document.getElementById("submitButton");
+// Получаем элементы
+const dropdown = document.querySelector(".dropdown");
+const dropdownToggle = document.querySelector(".dropdown-toggle");
+const dropdownContent = document.querySelector(".dropdown-content");
 
-// Добавим обработчик события на клик по кнопке
-
-submitButton.addEventListener("click", function (event) {
-  // Останавливаем обычное поведение формы (она не будет отправляться)
-  event.preventDefault();
-  // Найдем значение поля имени
-  const name = document.getElementById("name").value;
-  // Покажем сообщение с именем
-  alert("Форма отправлена! Привет " + name);
+// Обработчик клика по кнопке (открытие/закрытие меню)
+dropdownToggle.addEventListener("click", function (event) {
+  // Переключаем класс active для отображения/скрытия меню
+  dropdown.classList.toggle("active");
+  // Блокируем распространение события, чтобы клик по кнопке не закрывал меню
+  event.stopPropagation();
 });
-*/
 
-/*const submitButton = document.getElementById("submitButton");
+// Обработчик клика по всему документу
+document.addEventListener("click", function (event) {
+  // Если клик был вне выпадающего меню, то закрываем его
+  if (!dropdown.contains(event.target)) {
+    dropdown.classList.remove("active");
+  }
+});
 
-submitButton.addEventListener("click", function (event) {
-  event.preventDefault();
-
-  const name = document.getElementById("name").value;
-  const result = document.getElementById("result");
-  result.textContent = name;
+// Блокируем клик внутри выпадающего меню, чтобы не закрывать его при клике внутри
+dropdownContent.addEventListener("click", function (event) {
+  event.stopPropagation();
 });
