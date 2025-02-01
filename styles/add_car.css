@@ -1,0 +1,48 @@
+/* Контейнер для формы регистрации */
+.registration-container {
+  flex-grow: 1; /* Форму растягиваем на оставшееся пространство */
+  display: flex;
+  flex-direction: column; /* Содержимое формы будет располагаться вертикально */
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box; /* Учитываем отступы в ширине */
+}
+
+/* Заголовок формы */
+.registration-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Форма */
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  width: 300px;
+}
+
+/* Поле ввода */
+.registration-form input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Кнопка */
+.registration-form button {
+  padding: 10px;
+  font-size: 16px;
+  background-color: rgb(121, 88, 0);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Стили при наведении на кнопку */
+.registration-form button:hover {
+  background-color: rgba(216, 132, 5, 0.755);
+}
