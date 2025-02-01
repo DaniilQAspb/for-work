@@ -125,6 +125,8 @@ app.put("/update-car/:id", async (req, res) => {
       description,
     } = req.body;
 
+    console.log("Получены данные для обновления:", req.body); // Логирование данных
+
     // Проверяем, существует ли машина
     const checkQuery = "SELECT * FROM cars WHERE car_id = $1";
     const checkResult = await pool.query(checkQuery, [id]);
@@ -153,6 +155,8 @@ app.put("/update-car/:id", async (req, res) => {
       description,
       id,
     ]);
+
+    console.log("Обновленные данные машины:", result.rows[0]); // Логирование результата
 
     res.json({
       message: "Машина успешно обновлена!",

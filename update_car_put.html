@@ -19,8 +19,8 @@
         <a href="#" class="dropdown-toggle">Меню</a>
         <div class="dropdown-content">
           <a href="find_car.html">Найти автомобиль</a>
-          <a href="#">Добавить автомобиль</a>
-          <a href="update_car_put.html">Изменить характеристики</a>
+          <a href="index.html">Добавить автомобиль</a>
+          <a href="#">Изменить характеристики</a>
           <a href="#">Изменить частично характеристики</a>
           <a href="#">Удалить автомобиль</a>
         </div>
@@ -30,12 +30,17 @@
     </nav>
 
     <div class="registration-container">
-      <h2>Добавить автомобиль</h2>
-      <form
-        class="registration-form"
-        action="http://localhost:3000/add-car"
-        method="POST"
-      >
+      <h2>Обновить данные</h2>
+      <form id="updateCarForm" class="registration-form">
+        <label for="car_id">ID автомобиля:</label>
+        <input
+          type="number"
+          id="car_id"
+          name="car_id"
+          placeholder="Введите ID автомобиля"
+          required
+        />
+
         <label for="brand">Бренд:</label>
         <input
           type="text"
@@ -44,6 +49,7 @@
           placeholder="Введите бренд автомобиля"
           required
         />
+
         <label for="model">Модель:</label>
         <input
           type="text"
@@ -52,6 +58,7 @@
           placeholder="Введите модель автомобиля"
           required
         />
+
         <label for="year">Год выпуска:</label>
         <input
           type="number"
@@ -62,6 +69,7 @@
           max="2025"
           required
         />
+
         <label for="price">Цена:</label>
         <input
           type="number"
@@ -70,6 +78,7 @@
           placeholder="Введите цену автомобиля"
           required
         />
+
         <label for="mileage">Пробег:</label>
         <input
           type="number"
@@ -78,6 +87,7 @@
           placeholder="Введите пробег автомобиля"
           required
         />
+
         <label for="fueltype">Тип топлива:</label>
         <input
           type="text"
@@ -86,6 +96,7 @@
           placeholder="Введите тип топлива автомобиля"
           required
         />
+
         <label for="transmission">Коробка передач:</label>
         <input
           type="text"
@@ -94,6 +105,7 @@
           placeholder="Введите тип коробки передач"
           required
         />
+
         <label for="description">Описание:</label>
         <input
           type="text"
@@ -102,12 +114,14 @@
           placeholder="Введите дополнительное описание"
           required
         />
-        <button type="submit" id="submitButton">Внести машину</button>
+
+        <button type="submit" id="submitButton">Обновить данные</button>
       </form>
     </div>
     <footer class="footer">
       <p>Это моя нижняя панель. &copy; 2025</p>
     </footer>
     <script src="scripts/menu.js"></script>
+    <script src="scripts/update_car_put.js"></script>
   </body>
 </html>
