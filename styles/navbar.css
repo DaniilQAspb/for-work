@@ -48,6 +48,10 @@
   margin-top: 5px;
 }
 
+#logoutButton {
+  color: aquamarine;
+}
+
 /* Показ контента, когда класс active добавлен */
 .dropdown.active .dropdown-content {
   display: block;

@@ -26,6 +26,7 @@
         </div>
         <a href="#">Вход</a>
         <a href="registration.html">Регистрация</a>
+        <a href="#" id="logoutButton" style="display: none">Выйти</a>
       </div>
     </nav>
 
@@ -67,5 +68,17 @@
 
     <script src="scripts/login.js"></script>
     <script src="scripts/menu.js"></script>
+    <script type="module">
+      import { updateSessionInfo, logout } from "./scripts/sessionStorage.js";
+
+      updateSessionInfo(); // Обновляем информацию о сессии
+
+      document
+        .getElementById("logoutButton")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+          logout();
+        });
+    </script>
   </body>
 </html>
