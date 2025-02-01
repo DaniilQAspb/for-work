@@ -48,6 +48,27 @@ app.get("/cars", async (req, res) => {
   }
 });
 
+// Поиск машины по ID
+app.get("/car/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log("Ищем машину с ID:", id); // Логирование ID
+
+    // Получаем машину по ID
+    const query = "SELECT * FROM cars WHERE car_id = $1";
+    const result = await pool.query(query, [id]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Машина не найдена." });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error("Ошибка при поиске машины:", err.message);
+    res.status(500).json({ error: "Ошибка при поиске машины." });
+  }
+});
+
 // Добавление машины в базу
 app.post("/add-car", async (req, res) => {
   try {
