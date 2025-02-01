@@ -5,6 +5,7 @@ const { Pool } = require("pg");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
+const verifyToken = require("./middleware/auth");
 
 const pool = new Pool({
   user: "postgres",
@@ -134,7 +135,7 @@ app.post("/login", async (req, res) => {
 });
 
 // Получение списка всех пользователей
-app.get("/users", async (req, res) => {
+app.get("/users", verifyToken, async (req, res) => {
   try {
     const query = "SELECT user_id, username, email FROM users"; // Запрос для получения пользователей без паролей
     const result = await pool.query(query);
@@ -176,7 +177,7 @@ app.get("/cars", async (req, res) => {
 });
 
 // Поиск машины по ID
-app.get("/car/:id", async (req, res) => {
+app.get("/car/:id", verifyToken, async (req, res) => {
   try {
     const { id } = req.params;
     console.log("Ищем машину с ID:", id); // Логирование ID
@@ -197,7 +198,7 @@ app.get("/car/:id", async (req, res) => {
 });
 
 // Добавление машины в базу
-app.post("/add-car", async (req, res) => {
+app.post("/add-car", verifyToken, async (req, res) => {
   try {
     const {
       brand,
@@ -238,7 +239,7 @@ app.post("/add-car", async (req, res) => {
 });
 
 // Обновление машины по ID
-app.put("/update-car/:id", async (req, res) => {
+app.put("/update-car/:id", verifyToken, async (req, res) => {
   try {
     const { id } = req.params;
     const {
@@ -296,7 +297,7 @@ app.put("/update-car/:id", async (req, res) => {
 });
 
 // Частичное обновление машины по ID
-app.patch("/update-car/:id", async (req, res) => {
+app.patch("/update-car/:id", verifyToken, async (req, res) => {
   try {
     const { id } = req.params;
     const updates = req.body;
@@ -335,7 +336,7 @@ app.patch("/update-car/:id", async (req, res) => {
 });
 
 // Удаление машины по ID
-app.delete("/delete-car/:id", async (req, res) => {
+app.delete("/delete-car/:id", verifyToken, async (req, res) => {
   try {
     const { id } = req.params;
 
