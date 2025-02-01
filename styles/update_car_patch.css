@@ -1,0 +1,83 @@
+/* Контейнер для формы */
+.registration-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Заголовок формы */
+.registration-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Форма */
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  width: 300px;
+}
+
+/* Поля ввода */
+.registration-form input,
+.registration-form textarea {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%; /* Поля ввода растягиваются по ширине */
+  box-sizing: border-box; /* Чтобы padding не выходил за пределы */
+}
+
+/* Кнопка */
+.registration-form button {
+  padding: 10px;
+  font-size: 16px;
+  background-color: rgb(121, 88, 0);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.registration-form button:hover {
+  background-color: rgba(216, 132, 5, 0.755);
+}
+
+/* Стили для скрытых полей */
+#updateFields .field-container {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Контейнер для чекбоксов */
+#selectFields {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Выравнивание текста по левой стороне и чекбоксов справа */
+#selectFields label {
+  display: flex;
+  flex-direction: row; /* Размещаем элементы в строку */
+  align-items: center; /* Выровняем по вертикали */
+  justify-content: flex-start; /* Текст слева */
+  width: 250px; /* Фиксированная ширина контейнера, подстрой по необходимости */
+  cursor: pointer;
+  white-space: nowrap; /* Запрещаем перенос текста */
+}
+
+/* Чекбоксы теперь справа */
+#selectFields input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  margin-left: 10px; /* Чекбокс с отступом от текста */
+}

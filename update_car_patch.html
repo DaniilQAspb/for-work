@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Site</title>
+    <link rel="stylesheet" href="styles/form.css" />
+    <link rel="stylesheet" href="styles/base.css" />
+    <link rel="stylesheet" href="styles/footer.css" />
+    <link rel="stylesheet" href="styles/navbar.css" />
+    <link rel="stylesheet" href="styles/update_car_patch.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="dropdown">
+        <a href="#" class="dropdown-toggle">Меню</a>
+        <div class="dropdown-content">
+          <a href="find_car.html">Найти автомобиль</a>
+          <a href="index.html">Добавить автомобиль</a>
+          <a href="#">Изменить характеристики</a>
+          <a href="update_car_patch.html">Изменить частично характеристики</a>
+          <a href="#">Удалить автомобиль</a>
+        </div>
+        <a href="#">Вход</a>
+        <a href="#">Регистрация</a>
+      </div>
+    </nav>
+
+    <div class="registration-container">
+      <h2>Обновить данные</h2>
+      <form id="updateCarForm" class="registration-form">
+        <label for="car_id">ID автомобиля:</label>
+        <input
+          type="number"
+          id="car_id"
+          name="car_id"
+          placeholder="Введите ID автомобиля"
+          required
+        />
+
+        <label for="selectFields">Выберите поля для обновления:</label>
+        <div id="selectFields">
+          <label for="updateBrand">
+            <input
+              type="checkbox"
+              id="updateBrand"
+              name="fields"
+              value="brand"
+            />
+            Бренд
+          </label>
+
+          <label for="updateModel">
+            <input
+              type="checkbox"
+              id="updateModel"
+              name="fields"
+              value="model"
+            />
+            Модель
+          </label>
+
+          <label for="updateYear">
+            <input type="checkbox" id="updateYear" name="fields" value="year" />
+            Год выпуска
+          </label>
+
+          <label for="updatePrice">
+            <input
+              type="checkbox"
+              id="updatePrice"
+              name="fields"
+              value="price"
+            />
+            Цена
+          </label>
+
+          <label for="updateMileage">
+            <input
+              type="checkbox"
+              id="updateMileage"
+              name="fields"
+              value="mileage"
+            />
+            Пробег
+          </label>
+
+          <label for="updateFueltype">
+            <input
+              type="checkbox"
+              id="updateFueltype"
+              name="fields"
+              value="fueltype"
+            />
+            Тип топлива
+          </label>
+
+          <label for="updateTransmission">
+            <input
+              type="checkbox"
+              id="updateTransmission"
+              name="fields"
+              value="transmission"
+            />
+            Коробка передач
+          </label>
+
+          <label for="updateDescription">
+            <input
+              type="checkbox"
+              id="updateDescription"
+              name="fields"
+              value="description"
+            />
+            Описание
+          </label>
+        </div>
+
+        <!-- Скрытые поля для обновления -->
+        <div id="updateFields">
+          <div id="brandField" class="field-container" style="display: none">
+            <label for="brand">Бренд:</label>
+            <input
+              type="text"
+              id="brand"
+              name="brand"
+              placeholder="Введите бренд автомобиля"
+            />
+          </div>
+
+          <div id="modelField" class="field-container" style="display: none">
+            <label for="model">Модель:</label>
+            <input
+              type="text"
+              id="model"
+              name="model"
+              placeholder="Введите модель автомобиля"
+            />
+          </div>
+
+          <div id="yearField" class="field-container" style="display: none">
+            <label for="year">Год выпуска:</label>
+            <input
+              type="number"
+              id="year"
+              name="year"
+              placeholder="Введите год выпуска автомобиля"
+              min="1886"
+              max="2025"
+            />
+          </div>
+
+          <div id="priceField" class="field-container" style="display: none">
+            <label for="price">Цена:</label>
+            <input
+              type="number"
+              id="price"
+              name="price"
+              placeholder="Введите цену автомобиля"
+            />
+          </div>
+
+          <div id="mileageField" class="field-container" style="display: none">
+            <label for="mileage">Пробег:</label>
+            <input
+              type="number"
+              id="mileage"
+              name="mileage"
+              placeholder="Введите пробег автомобиля"
+            />
+          </div>
+
+          <div id="fueltypeField" class="field-container" style="display: none">
+            <label for="fueltype">Тип топлива:</label>
+            <input
+              type="text"
+              id="fueltype"
+              name="fueltype"
+              placeholder="Введите тип топлива автомобиля"
+            />
+          </div>
+
+          <div
+            id="transmissionField"
+            class="field-container"
+            style="display: none"
+          >
+            <label for="transmission">Коробка передач:</label>
+            <input
+              type="text"
+              id="transmission"
+              name="transmission"
+              placeholder="Введите тип коробки передач"
+            />
+          </div>
+
+          <div
+            id="descriptionField"
+            class="field-container"
+            style="display: none"
+          >
+            <label for="description">Описание:</label>
+            <input
+              type="text"
+              id="description"
+              name="description"
+              placeholder="Введите дополнительное описание"
+            />
+          </div>
+        </div>
+
+        <button type="submit" id="submitButton">Обновить данные</button>
+      </form>
+    </div>
+
+    <footer class="footer">
+      <p>Это моя нижняя панель. &copy; 2025</p>
+    </footer>
+    <script src="scripts/menu.js"></script>
+    <script src="scripts/update_car_patch.js"></script>
+  </body>
+</html>
