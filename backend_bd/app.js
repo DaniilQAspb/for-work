@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Подключаем статические файлы
 const publicDir = path.resolve(
-  "C:/Users/dsadg/OneDrive/Рабочий стол/Разработка и управление проектами/HTML"
+  "C:/Users/dsadg/OneDrive/Рабочий стол/Разработка и управление проектами/Global_project"
 );
 app.use(express.static(publicDir));
 
