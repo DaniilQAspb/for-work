@@ -125,16 +125,23 @@
       <p>Это моя нижняя панель. &copy; 2025</p>
     </footer>
     <script src="scripts/menu.js"></script>
+    <script src="scripts/add_car.js"></script>
+    <script type="module" src="scripts/sessionStorage.js"></script>
+    <!-- Подключаем sessionStorage.js как модуль -->
     <script type="module">
-      import { updateSessionInfo, logout } from "./scripts/sessionStorage.js";
+      import { updateSessionInfo, logout } from "./scripts/sessionStorage.js"; // Импортируем функции
 
-      updateSessionInfo(); // Обновляем информацию о сессии
+      // Обновляем информацию о сессии при загрузке страницы
+      document.addEventListener("DOMContentLoaded", function () {
+        updateSessionInfo(); // Обновление информации о сессии
+        console.log("sessionStorage.js загружен и сессия обновлена"); // Логирование, чтобы увидеть, что скрипт загружен
+      });
 
       document
         .getElementById("logoutButton")
-        .addEventListener("click", function (event) {
+        ?.addEventListener("click", function (event) {
           event.preventDefault();
-          logout();
+          logout(); // Выход из системы при клике на кнопку
         });
     </script>
   </body>

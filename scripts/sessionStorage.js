@@ -1,27 +1,34 @@
-/// sessionStorage.js
+// sessionStorage.js
 
 // Функция для получения токена из localStorage
-function getToken() {
-  return localStorage.getItem("authToken");
+export function getToken() {
+  const token = localStorage.getItem("authToken");
+  console.log("Получен токен из localStorage:", token); // Логирование токена
+  return token;
 }
 
 // Функция для проверки сессии
-function isAuthenticated() {
+export function isAuthenticated() {
   const token = getToken();
+  console.log("Проверка сессии, токен:", token); // Логирование для проверки сессии
   return token ? true : false;
 }
 
 // Функция выхода из системы
-function logout() {
+export function logout() {
+  console.log("Выполнение выхода, удаление токена"); // Логирование при выходе
   localStorage.removeItem("authToken"); // Удаляем токен
   updateSessionInfo(); // Обновляем информацию о сессии
   window.location.reload(); // Перезагружаем страницу
 }
 
 // Функция для отображения информации о сессии
-function updateSessionInfo() {
+export function updateSessionInfo() {
   const sessionStatus = document.getElementById("sessionStatus");
   const logoutButton = document.getElementById("logoutButton");
+
+  const token = getToken();
+  console.log("Обновление информации о сессии, токен:", token); // Логирование токена
 
   if (isAuthenticated()) {
     sessionStatus.innerText = "Вы авторизованы!";
@@ -32,5 +39,8 @@ function updateSessionInfo() {
   }
 }
 
-// Экспортируем функции
-export { getToken, isAuthenticated, updateSessionInfo, logout };
+// Обновляем информацию о сессии после полной загрузки DOM
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("DOM загружен, обновление информации о сессии");
+  updateSessionInfo(); // Обновляем информацию о сессии, когда DOM полностью загружен
+});

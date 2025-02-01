@@ -13,9 +13,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
+      // Получаем токен из localStorage
+      const token = localStorage.getItem("authToken");
+
+      if (!token) {
+        carDetails.innerHTML = "<p>Вы не авторизованы.</p>";
+        return;
+      }
+
       // Отправляем запрос на удаление машины
       const response = await fetch(`/delete-car/${carId}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`, // Добавляем токен в заголовки
+        },
       });
 
       const result = await response.json();

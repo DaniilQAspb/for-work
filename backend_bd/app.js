@@ -362,6 +362,34 @@ app.delete("/delete-car/:id", verifyToken, async (req, res) => {
   }
 });
 
+// Удаляем пользователя по ID
+app.delete("/delete-user/:id", verifyToken, async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    // Проверяем, существует ли пользователь
+    const checkUserQuery = "SELECT * FROM users WHERE user_id = $1";
+    const userResult = await pool.query(checkUserQuery, [userId]);
+
+    if (userResult.rows.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Пользователь не найден." });
+    }
+
+    // Удаляем пользователя
+    const deleteQuery = "DELETE FROM users WHERE user_id = $1";
+    await pool.query(deleteQuery, [userId]);
+
+    res.json({ success: true, message: "Пользователь успешно удален." });
+  } catch (err) {
+    console.error("Ошибка при удалении пользователя:", err);
+    res
+      .status(500)
+      .json({ success: false, message: "Ошибка при удалении пользователя." });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Сервер запущен на http://localhost:${PORT}`);
 });

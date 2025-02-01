@@ -43,6 +43,15 @@ document.addEventListener("DOMContentLoaded", () => {
     );
     const updates = {};
 
+    // Получаем токен из localStorage
+    const token = localStorage.getItem("authToken");
+
+    // Если токен не найден, показываем ошибку и выходим
+    if (!token) {
+      alert("Вы не авторизованы!");
+      return;
+    }
+
     // Собираем данные для обновления
     selectedFields.forEach((checkbox) => {
       const fieldName = checkbox.value;
@@ -59,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Передаем токен в заголовке
           },
           body: JSON.stringify(updates),
         });

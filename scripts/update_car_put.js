@@ -13,6 +13,15 @@ document
     const transmission = document.getElementById("transmission").value;
     const description = document.getElementById("description").value;
 
+    // Получаем токен из localStorage
+    const token = localStorage.getItem("authToken");
+
+    // Если токен не найден, показываем ошибку и выходим
+    if (!token) {
+      alert("Вы не авторизованы!");
+      return;
+    }
+
     // Проверка на пустые значения
     if (
       !carId ||
@@ -49,6 +58,7 @@ document
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Добавляем токен в заголовок
           },
           body: JSON.stringify({
             brand,
