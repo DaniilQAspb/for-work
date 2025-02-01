@@ -2,7 +2,8 @@ const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 const { Pool } = require("pg");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const cors = require("cors");
 
 const pool = new Pool({
@@ -60,16 +61,74 @@ app.post("/register", async (req, res) => {
     `;
     const newUser = await pool.query(query, [username, email, hashedPassword]);
 
+    // Генерация JWT токена
+    const token = jwt.sign(
+      { userId: newUser.rows[0].user_id }, // Включаем userId в токен
+      "your_jwt_secret", // Секретный ключ для генерации токена
+      { expiresIn: "1h" } // Время жизни токена
+    );
+
     res.json({
       success: true,
       message: "Пользователь успешно зарегистрирован.",
       user: newUser.rows[0],
+      token, // Возвращаем токен в ответе
     });
   } catch (err) {
     console.error("Ошибка при регистрации пользователя:", err.message);
     res.status(500).json({
       success: false,
       message: "Ошибка при регистрации пользователя.",
+    });
+  }
+});
+
+// Авторизация пользователя (вход)
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // Находим пользователя по email
+    const query = "SELECT * FROM users WHERE email = $1";
+    const result = await pool.query(query, [email]);
+
+    if (result.rows.length === 0) {
+      return res.json({
+        success: false,
+        message: "Пользователь с таким email не найден.",
+      });
+    }
+
+    const user = result.rows[0];
+
+    // Проверка пароля
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      return res.json({
+        success: false,
+        message: "Неверный пароль.",
+      });
+    }
+
+    // Генерация JWT токена
+    const token = jwt.sign(
+      { userId: user.user_id }, // Включаем userId в токен
+      "your_jwt_secret", // Секретный ключ
+      { expiresIn: "1h" } // Время жизни токена
+    );
+
+    res.json({
+      success: true,
+      message: "Авторизация прошла успешно.",
+      user,
+      token, // Возвращаем токен
+    });
+  } catch (err) {
+    console.error("Ошибка при авторизации:", err.message);
+    res.status(500).json({
+      success: false,
+      message: "Ошибка при авторизации.",
     });
   }
 });
@@ -93,12 +152,10 @@ app.get("/users", async (req, res) => {
     });
   } catch (err) {
     console.error("Ошибка при получении списка пользователей:", err.message);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Ошибка при получении списка пользователей.",
-      });
+    res.status(500).json({
+      success: false,
+      message: "Ошибка при получении списка пользователей.",
+    });
   }
 });
 
