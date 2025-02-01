@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Site</title>
-    <link rel="stylesheet" href="styles/form.css" />
+    <title>Вход</title>
     <link rel="stylesheet" href="styles/base.css" />
     <link rel="stylesheet" href="styles/footer.css" />
     <link rel="stylesheet" href="styles/navbar.css" />
+    <link rel="stylesheet" href="styles/authorization.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
       rel="stylesheet"
@@ -22,34 +22,38 @@
           <a href="index.html">Добавить автомобиль</a>
           <a href="update_car_put.html">Изменить характеристики</a>
           <a href="update_car_patch.html">Изменить частично характеристики</a>
-          <a href="#">Удалить автомобиль</a>
+          <a href="delete_car.html">Удалить автомобиль</a>
         </div>
-        <a href="authorization.html">Вход</a>
+        <a href="login.html">Вход</a>
         <a href="registration.html">Регистрация</a>
       </div>
     </nav>
 
-    <div class="registration-container">
-      <h2>Удалить автомобиль</h2>
-      <form
-        class="registration-form"
-        id="deleteCarForm"
-        action="javascript:void(0);"
-      >
-        <label for="car_id"></label>
-        <!-- Изменение: текст метки -->
+    <div class="login-container">
+      <h2>Вход</h2>
+      <form class="login-form" id="loginForm">
+        <label for="email">Email</label>
         <input
-          type="text"
-          id="car_id"
-          name="car_id"
-          placeholder="Введите ID автомобиля"
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Введите email"
           required
         />
-        <button type="submit" id="submitButton">Удалить машину</button>
+
+        <label for="password">Пароль</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Введите пароль"
+          required
+        />
+
+        <button type="submit" id="submitButton">Войти</button>
       </form>
 
-      <!-- Поле для вывода ответа от сервера -->
-      <div id="carDetails" style="margin-top: 20px">
+      <div id="loginResponse" style="margin-top: 20px">
         <!-- Ответ от сервера будет отображаться здесь -->
       </div>
     </div>
@@ -57,7 +61,7 @@
     <footer class="footer">
       <p>Это моя нижняя панель. &copy; 2025</p>
     </footer>
-    <script src="scripts/menu.js"></script>
-    <script src="scripts/delete_car.js"></script>
+
+    <script src="scripts/login.js"></script>
   </body>
 </html>
