@@ -29,6 +29,21 @@
       </div>
     </nav>
 
+    <!-- Элемент для отображения информации о сессии -->
+    <div
+      id="sessionStatus"
+      style="
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        font-weight: bold;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        z-index: 1000;
+      "
+    ></div>
+
     <div class="registration-container">
       <h2>Добавить автомобиль</h2>
       <form
@@ -109,5 +124,9 @@
       <p>Это моя нижняя панель. &copy; 2025</p>
     </footer>
     <script src="scripts/menu.js"></script>
+    <script type="module">
+      import { updateSessionInfo } from "./scripts/sessionStorage.js"; // Импортируем функции из sessionStorage.js
+      updateSessionInfo(); // Обновляем информацию о сессии
+    </script>
   </body>
 </html>

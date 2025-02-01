@@ -21,7 +21,7 @@
         <div class="dropdown-content">
           <a href="find_car.html">Найти автомобиль</a>
           <a href="index.html">Добавить автомобиль</a>
-          <a href="#">Изменить характеристики</a>
+          <a href="update_car_put.html">Изменить характеристики</a>
           <a href="update_car_patch.html">Изменить частично характеристики</a>
           <a href="delete_car.html">Удалить автомобиль</a>
         </div>
@@ -29,6 +29,21 @@
         <a href="registration.html">Регистрация</a>
       </div>
     </nav>
+
+    <!-- Элемент для отображения информации о сессии -->
+    <div
+      id="sessionStatus"
+      style="
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        font-weight: bold;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        z-index: 1000;
+      "
+    ></div>
 
     <div class="registration-container">
       <h2>Обновить данные</h2>
@@ -222,5 +237,9 @@
     </footer>
     <script src="scripts/menu.js"></script>
     <script src="scripts/update_car_patch.js"></script>
+    <script type="module">
+      import { updateSessionInfo } from "./scripts/sessionStorage.js"; // Импортируем функции из sessionStorage.js
+      updateSessionInfo(); // Обновляем информацию о сессии
+    </script>
   </body>
 </html>
