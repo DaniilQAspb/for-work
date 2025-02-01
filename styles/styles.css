@@ -13,7 +13,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #ffffff; /* Белый фон */
+  background-color: #382222; /* Белый фон */
   border-bottom: 1px solid #000000; /* Тонкая граница */
   padding: 10px 10px;
 }
@@ -21,7 +21,7 @@ body {
 /* Стили для ссылок в навигации */
 .navbar a {
   text-decoration: none;
-  color: #333; /* Тёмный текст */
+  color: #ffffff; /* Тёмный текст */
   margin-left: 20px;
   font-size: 17px;
 }
