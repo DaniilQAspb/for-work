@@ -1,0 +1,314 @@
+swagger: "2.0"
+info:
+  description: "API для Car Dealership"
+  version: "1.0.0"
+  title: "Car Dealership API"
+host: "localhost:3000"
+basePath: "/"
+schemes:
+  - "http"
+paths:
+  /register:
+    post:
+      summary: "Регистрация нового пользователя"
+      description: "Создает нового пользователя в системе."
+      parameters:
+        - in: "body"
+          name: "user"
+          description: "Данные нового пользователя"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              username:
+                type: "string"
+              email:
+                type: "string"
+              password:
+                type: "string"
+      responses:
+        200:
+          description: "Пользователь успешно зарегистрирован"
+        400:
+          description: "Ошибка при регистрации пользователя"
+
+  /login:
+    post:
+      summary: "Авторизация пользователя"
+      description: "Проводит авторизацию пользователя по email и паролю."
+      parameters:
+        - in: "body"
+          name: "user"
+          description: "Данные для авторизации"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              email:
+                type: "string"
+              password:
+                type: "string"
+      responses:
+        200:
+          description: "Авторизация прошла успешно"
+        400:
+          description: "Неверные данные для авторизации"
+
+  /users:
+    get:
+      summary: "Получение списка пользователей"
+      description: "Возвращает список всех пользователей в системе (защищено токеном)."
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "Список пользователей"
+        401:
+          description: "Неавторизованный доступ"
+
+  /cars:
+    get:
+      summary: "Получение списка всех машин"
+      description: "Возвращает список всех машин в системе."
+      responses:
+        200:
+          description: "Список машин"
+
+  /car/{id}:
+    get:
+      summary: "Поиск машины по ID"
+      description: "Возвращает информацию о машине по её ID."
+      parameters:
+        - in: "path"
+          name: "id"
+          required: true
+          type: "integer"
+          description: "ID машины"
+      responses:
+        200:
+          description: "Данные о машине"
+        404:
+          description: "Машина не найдена"
+
+  /add-car:
+    post:
+      summary: "Добавление новой машины"
+      description: "Добавляет новую машину в базу данных (защищено токеном)."
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: "body"
+          name: "car"
+          description: "Данные машины"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              brand:
+                type: "string"
+              model:
+                type: "string"
+              year:
+                type: "integer"
+              price:
+                type: "number"
+                format: "float"
+              mileage:
+                type: "integer"
+              fueltype:
+                type: "string"
+              transmission:
+                type: "string"
+              description:
+                type: "string"
+      responses:
+        200:
+          description: "Машина успешно добавлена"
+        401:
+          description: "Неавторизованный доступ"
+
+  /update-car/{id}:
+    put:
+      summary: "Обновление данных машины по ID"
+      description: "Обновляет данные машины по ID (защищено токеном)."
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          description: "ID машины"
+        - in: body
+          name: car
+          description: "Данные для обновления"
+          required: true
+          schema:
+            type: object
+            properties:
+              brand:
+                type: string
+              model:
+                type: string
+              year:
+                type: integer
+              price:
+                type: number
+                format: float
+              mileage:
+                type: integer
+              fueltype:
+                type: string
+              transmission:
+                type: string
+              description:
+                type: string
+      responses:
+        200:
+          description: "Машина успешно обновлена"
+        404:
+          description: "Машина не найдена"
+        401:
+          description: "Неавторизованный доступ"
+    patch:
+      summary: "Частичное обновление машины по ID"
+      description: "Обновляет одну или несколько характеристик машины по её ID."
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: "ID машины для обновления"
+        - in: body
+          name: car
+          description: "Обновляемые характеристики машины."
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  brand:
+                    type: string
+                  model:
+                    type: string
+                  year:
+                    type: integer
+                  price:
+                    type: number
+                    format: float
+                  mileage:
+                    type: number
+                    format: float
+                  fueltype:
+                    type: string
+                  transmission:
+                    type: string
+                  description:
+                    type: string
+      responses:
+        "200":
+          description: "Машина успешно обновлена"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Машина успешно обновлена!"
+                  updatedCar:
+                    type: object
+                    properties:
+                      car_id:
+                        type: integer
+                      brand:
+                        type: string
+                      model:
+                        type: string
+                      year:
+                        type: integer
+                      price:
+                        type: number
+                        format: float
+                      mileage:
+                        type: number
+                        format: float
+                      fueltype:
+                        type: string
+                      transmission:
+                        type: string
+                      description:
+                        type: string
+        "400":
+          description: "Неверные данные в запросе"
+        "404":
+          description: "Машина не найдена"
+        "500":
+          description: "Ошибка при обновлении машины"
+
+  /delete-car/{id}:
+    delete:
+      summary: "Удаление машины по ID"
+      description: "Удаляет машину по ID (защищено токеном)."
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: "path"
+          name: "id"
+          required: true
+          type: "integer"
+          description: "ID машины"
+      responses:
+        200:
+          description: "Машина успешно удалена"
+        404:
+          description: "Машина не найдена"
+        401:
+          description: "Неавторизованный доступ"
+
+  /user/{id}:
+    get:
+      summary: "Поиск пользователя по ID"
+      description: "Возвращает данные пользователя по его ID (защищено токеном)."
+      parameters:
+        - in: "path"
+          name: "id"
+          required: true
+          type: "integer"
+          description: "ID пользователя"
+      responses:
+        200:
+          description: "Данные пользователя"
+        404:
+          description: "Пользователь не найден"
+        401:
+          description: "Неавторизованный доступ"
+
+  /delete-user/{id}:
+    delete:
+      summary: "Удаление пользователя по ID"
+      description: "Удаляет пользователя по ID (защищено токеном)."
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: "path"
+          name: "id"
+          required: true
+          type: "integer"
+          description: "ID пользователя"
+      responses:
+        200:
+          description: "Пользователь успешно удален"
+        404:
+          description: "Пользователь не найден"
+        401:
+          description: "Неавторизованный доступ"
+
+securityDefinitions:
+  bearerAuth:
+    type: "apiKey"
+    in: "header"
+    name: "Authorization"
+    description: "Введите токен в формате: Bearer {токен}"

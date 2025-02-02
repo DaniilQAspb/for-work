@@ -5,6 +5,8 @@ const { Pool } = require("pg");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
+const swaggerUi = require("swagger-ui-express");
+const YAML = require("yamljs");
 const verifyToken = require("./middleware/auth");
 
 const pool = new Pool({
@@ -17,8 +19,24 @@ const pool = new Pool({
 
 const app = express();
 
+// Загружаем swagger.yaml
+const swaggerDocument = YAML.load(
+  path.join(__dirname, "..", "config", "swagger.yaml")
+);
+// Путь к файлу swagger.yaml
+
 // Разрешаем CORS
 app.use(cors());
+
+// Подключаем Swagger UI по пути /api-docs
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument, {
+    customCss: ".swagger-ui { background-color: #f4f4f4; }", // кастомный стиль
+    customSiteTitle: "Car Dealership API Documentation", // заголовок страницы
+  })
+);
 
 // Поддержка JSON-запросов и форм
 app.use(express.json());
