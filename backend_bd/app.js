@@ -362,6 +362,27 @@ app.delete("/delete-car/:id", verifyToken, async (req, res) => {
   }
 });
 
+// Поиск пользователя по ID
+app.get("/user/:id", verifyToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Получаем пользователя по ID
+    const query =
+      "SELECT user_id, username, email FROM users WHERE user_id = $1";
+    const result = await pool.query(query, [id]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Пользователь не найден." });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error("Ошибка при поиске пользователя:", err.message);
+    res.status(500).json({ error: "Ошибка при поиске пользователя." });
+  }
+});
+
 // Удаляем пользователя по ID
 app.delete("/delete-user/:id", verifyToken, async (req, res) => {
   try {
