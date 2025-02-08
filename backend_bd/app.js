@@ -181,7 +181,7 @@ app.get("/users", verifyToken, async (req, res) => {
 // Запуск сервера
 const PORT = 3000;
 // Получение списка всех машин
-app.get("/cars", async (req, res) => {
+app.get("/cars", verifyToken, async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM cars ORDER BY car_id DESC");
     res.json(result.rows);
