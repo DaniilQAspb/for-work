@@ -54,10 +54,17 @@ jobs:
           done
           echo "PostgreSQL failed to start" && exit 1
 
+      - name: Check table description (cars)
+        run: |
+          cd backend_bd
+          npx sequelize-cli db:seed:all --env test
+          echo "Fetching table description for 'cars'"
+          node -e "const { Sequelize, sequelize } = require('./models'); sequelize.query('DESCRIBE cars');"
+
       - name: Setup test database (if migrations exist)
         run: |
           cd backend_bd
-          sequelize-cli db:migrate --env test
+          npx sequelize-cli db:migrate --env test
         env:
           NODE_ENV: test
           DB_USER: postgres
