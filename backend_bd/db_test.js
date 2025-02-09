@@ -5,7 +5,8 @@ console.log("Текущий NODE_ENV:", process.env.NODE_ENV); // Логируе
 const pool = new Pool({
   user: process.env.DB_USER || "postgres",
   host: process.env.DB_HOST || "127.0.0.1", // Для GitHub Actions
-  database: process.env.NODE_ENV === "test" ? "testdb" : "CarDealership",
+  database:
+    process.env.NODE_ENV === "test" ? "CarDealership_test" : "CarDealership", // Меняем на правильное имя базы
   password: process.env.DB_PASSWORD || "root",
   port: process.env.DB_PORT || 5432,
 });
