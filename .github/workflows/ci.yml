@@ -54,37 +54,14 @@ jobs:
           done
           echo "PostgreSQL failed to start" && exit 1
 
-      - name: Check if the 'CarDealership_test' database exists
+      - name: Check environment variables
         run: |
-          PGPASSWORD=$DB_PASSWORD psql -h localhost -U $DB_USER -d postgres -c "SELECT 1 FROM pg_database WHERE datname='CarDealership_test';"
-        continue-on-error: true
-
-      - name: Create 'CarDealership_test' database if not exists
-        run: |
-          PGPASSWORD=$DB_PASSWORD psql -h localhost -U $DB_USER -d postgres -c "CREATE DATABASE CarDealership_test;"
-        continue-on-error: true
-
-      - name: Check if the 'cars' table exists
-        run: |
-          PGPASSWORD=$DB_PASSWORD psql -h localhost -U $DB_USER -d CarDealership_test -c "SELECT to_regclass('public.cars');"
-        continue-on-error: true
-
-      - name: Create 'cars' table if not exists
-        run: |
-          PGPASSWORD=$DB_PASSWORD psql -h localhost -U $DB_USER -d CarDealership_test -c "
-          CREATE TABLE IF NOT EXISTS public.cars (
-            car_id SERIAL PRIMARY KEY,
-            brand VARCHAR(50) NOT NULL,
-            model VARCHAR(50) NOT NULL,
-            year INTEGER,
-            price DECIMAL(12, 2) NOT NULL,
-            mileage INTEGER,
-            fueltype VARCHAR(20),
-            transmission VARCHAR(20),
-            description TEXT,
-            sold_by_employee_id INTEGER
-          );"
-        continue-on-error: true
+          echo "NODE_ENV: $NODE_ENV"
+          echo "DB_USER: $DB_USER"
+          echo "DB_PASSWORD: $DB_PASSWORD"
+          echo "DB_NAME: $DB_NAME"
+          echo "DB_HOST: $DB_HOST"
+          echo "DB_PORT: $DB_PORT"
 
       - name: Setup test database (if migrations exist)
         run: |

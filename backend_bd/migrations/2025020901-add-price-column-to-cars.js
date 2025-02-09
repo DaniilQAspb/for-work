@@ -1,31 +1,68 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    // Проверка на существование таблицы 'cars'
-    const result = await queryInterface.sequelize.query(
-      `SELECT to_regclass('public.cars');`
+    // Проверка наличия таблицы 'cars' в базе данных
+    const [results] = await queryInterface.sequelize.query(
+      "SELECT to_regclass('public.cars');"
     );
 
-    if (!result[0][0].to_regclass) {
-      throw new Error("Таблица 'cars' не существует!");
+    if (results[0].to_regclass === null) {
+      // Таблица не существует, создаем её
+      await queryInterface.createTable("cars", {
+        car_id: {
+          type: Sequelize.INTEGER,
+          primaryKey: true,
+          autoIncrement: true,
+          allowNull: false,
+        },
+        brand: {
+          type: Sequelize.STRING(50),
+          allowNull: false,
+        },
+        model: {
+          type: Sequelize.STRING(50),
+          allowNull: false,
+        },
+        year: {
+          type: Sequelize.INTEGER,
+        },
+        price: {
+          type: Sequelize.DECIMAL(12, 2),
+          allowNull: false,
+        },
+        mileage: {
+          type: Sequelize.INTEGER,
+        },
+        fueltype: {
+          type: Sequelize.STRING(20),
+        },
+        transmission: {
+          type: Sequelize.STRING(20),
+        },
+        description: {
+          type: Sequelize.TEXT,
+        },
+        sold_by_employee_id: {
+          type: Sequelize.INTEGER,
+        },
+      });
+      console.log("Таблица 'cars' была создана.");
+    } else {
+      console.log("Таблица 'cars' уже существует.");
     }
 
-    // Проверка наличия столбца 'price' с использованием прямого SQL-запроса
-    const columnResult = await queryInterface.sequelize.query(
-      `SELECT column_name 
-           FROM information_schema.columns 
-           WHERE table_schema = 'public' 
-           AND table_name = 'cars' 
-           AND column_name = 'price';`
+    // Добавление столбца 'price', если его нет
+    const columnCheck = await queryInterface.sequelize.query(
+      "SELECT column_name FROM information_schema.columns WHERE table_name = 'cars' AND column_name = 'price';"
     );
 
-    if (columnResult[0].length === 0) {
+    if (columnCheck[0].length === 0) {
       await queryInterface.addColumn("cars", "price", {
-        type: Sequelize.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(12, 2),
         allowNull: true,
       });
       console.log("Столбец 'price' добавлен в таблицу 'cars'.");
     } else {
-      console.log("Столбец 'price' уже существует в таблице 'cars'.");
+      console.log("Столбец 'price' уже существует.");
     }
   },
 
