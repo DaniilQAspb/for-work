@@ -40,6 +40,7 @@ jobs:
         run: |
           cd backend_bd
           npm install
+          chmod -R +x node_modules/.bin  # даём права на выполнение для всех файлов
 
       - name: Install sequelize-cli globally
         run: |
