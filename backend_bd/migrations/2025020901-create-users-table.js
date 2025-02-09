@@ -23,6 +23,7 @@ module.exports = {
       role_name: {
         type: Sequelize.STRING,
         allowNull: false,
+        defaultValue: "seller", // дефолтное значение для role_name
       },
       createdAt: {
         type: Sequelize.DATE,
