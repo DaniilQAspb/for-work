@@ -1,23 +1,19 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    // Указываем схему 'public' при описании таблицы
-    const tableDescription = await queryInterface.describeTable({
-      tableName: "cars",
-      schema: "public", // Указываем схему
-    });
+    // Проверка наличия столбца 'price' с использованием прямого SQL-запроса
+    const result = await queryInterface.sequelize.query(
+      `SELECT column_name 
+         FROM information_schema.columns 
+         WHERE table_schema = 'public' 
+         AND table_name = 'cars' 
+         AND column_name = 'price';`
+    );
 
-    if (!tableDescription.price) {
-      await queryInterface.addColumn(
-        {
-          tableName: "cars",
-          schema: "public", // Указываем схему
-        },
-        "price",
-        {
-          type: Sequelize.DECIMAL(10, 2), // Тип данных для цены
-          allowNull: true, // Разрешение на null значения
-        }
-      );
+    if (result[0].length === 0) {
+      await queryInterface.addColumn("cars", "price", {
+        type: Sequelize.DECIMAL(10, 2),
+        allowNull: true,
+      });
       console.log("Столбец 'price' добавлен в таблицу 'cars'.");
     } else {
       console.log("Столбец 'price' уже существует в таблице 'cars'.");
@@ -25,14 +21,7 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    // Если нужно отменить миграцию, удаляем столбец 'price'
-    await queryInterface.removeColumn(
-      {
-        tableName: "cars",
-        schema: "public", // Указываем схему
-      },
-      "price"
-    );
+    await queryInterface.removeColumn("cars", "price");
     console.log("Столбец 'price' удалён из таблицы 'cars'.");
   },
 };
