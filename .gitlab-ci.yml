@@ -1,0 +1,25 @@
+image: node:14
+
+services:
+  - postgres:latest
+
+stages:
+  - install
+  - test
+
+variables:
+  POSTGRES_DB: "CarDealership_test"
+  POSTGRES_USER: "postgres"
+  POSTGRES_PASSWORD: "root"
+
+install_dependencies:
+  stage: install
+  script:
+    - npm install
+
+test:
+  stage: test
+  script:
+    - npm test
+  after_script:
+    - echo "Тесты завершены!"
