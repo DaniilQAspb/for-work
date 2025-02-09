@@ -1,73 +1,60 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    // Проверка наличия таблицы 'cars' в базе данных
+    // Проверка наличия таблицы 'users' в базе данных
     const [results] = await queryInterface.sequelize.query(
-      "SELECT to_regclass('public.cars');"
+      "SELECT to_regclass('public.users');"
     );
 
     if (results[0].to_regclass === null) {
       // Таблица не существует, создаем её
-      await queryInterface.createTable("cars", {
-        car_id: {
+      await queryInterface.createTable("users", {
+        id: {
           type: Sequelize.INTEGER,
           primaryKey: true,
           autoIncrement: true,
           allowNull: false,
         },
-        brand: {
-          type: Sequelize.STRING(50),
+        email: {
+          type: Sequelize.STRING,
+          allowNull: false,
+          unique: true,
+        },
+        password: {
+          type: Sequelize.STRING,
           allowNull: false,
         },
-        model: {
-          type: Sequelize.STRING(50),
+        createdAt: {
           allowNull: false,
+          type: Sequelize.DATE,
+          defaultValue: Sequelize.NOW,
         },
-        year: {
-          type: Sequelize.INTEGER,
-        },
-        price: {
-          type: Sequelize.DECIMAL(12, 2),
+        updatedAt: {
           allowNull: false,
-        },
-        mileage: {
-          type: Sequelize.INTEGER,
-        },
-        fueltype: {
-          type: Sequelize.STRING(20),
-        },
-        transmission: {
-          type: Sequelize.STRING(20),
-        },
-        description: {
-          type: Sequelize.TEXT,
-        },
-        sold_by_employee_id: {
-          type: Sequelize.INTEGER,
+          type: Sequelize.DATE,
+          defaultValue: Sequelize.NOW,
         },
       });
-      console.log("Таблица 'cars' была создана.");
+      console.log("Таблица 'users' была создана.");
     } else {
-      console.log("Таблица 'cars' уже существует.");
-    }
-
-    // Добавление столбца 'price', если его нет
-    const columnCheck = await queryInterface.sequelize.query(
-      "SELECT column_name FROM information_schema.columns WHERE table_name = 'cars' AND column_name = 'price';"
-    );
-
-    if (columnCheck[0].length === 0) {
-      await queryInterface.addColumn("cars", "price", {
-        type: Sequelize.DECIMAL(12, 2),
-        allowNull: true,
-      });
-      console.log("Столбец 'price' добавлен в таблицу 'cars'.");
-    } else {
-      console.log("Столбец 'price' уже существует.");
+      console.log(
+        "Таблица 'users' уже существует. Миграция не будет выполнена."
+      );
     }
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.removeColumn("cars", "price");
-    console.log("Столбец 'price' удалён из таблицы 'cars'.");
+    // Удаляем таблицу 'users', если она существует
+    const [results] = await queryInterface.sequelize.query(
+      "SELECT to_regclass('public.users');"
+    );
+
+    if (results[0].to_regclass !== null) {
+      await queryInterface.dropTable("users");
+      console.log("Таблица 'users' была удалена.");
+    } else {
+      console.log(
+        "Таблица 'users' не существует. Миграция не будет выполнена."
+      );
+    }
   },
 };
