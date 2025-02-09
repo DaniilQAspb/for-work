@@ -41,6 +41,9 @@ jobs:
           cd backend_bd
           npm install
 
+      - name: Fix permissions for sequelize-cli
+        run: sudo chmod -R 755 ./node_modules/.bin/sequelize-cli
+
       - name: Wait for PostgreSQL to be ready
         run: |
           for i in {1..10}; do
