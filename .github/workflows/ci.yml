@@ -44,6 +44,7 @@ jobs:
       - name: Install sequelize-cli globally
         run: |
           npm install -g sequelize-cli
+          npm install cross-env
 
       - name: Wait for PostgreSQL to be ready
         run: |
