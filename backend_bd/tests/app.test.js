@@ -11,8 +11,49 @@ describe("Тесты API", () => {
     });
   });
 
+  // Тест для регистрации пользователя
+  describe("POST /register", () => {
+    it("should register a new user successfully", async () => {
+      const newUser = {
+        username: "testuser",
+        email: "testuser@example.com",
+        password: "password123",
+      };
+
+      const response = await request(app).post("/register").send(newUser);
+
+      expect(response.status).toBe(200);
+      expect(response.body.success).toBe(true);
+      expect(response.body.message).toBe(
+        "Пользователь успешно зарегистрирован."
+      );
+      expect(response.body.token).toBeDefined(); // Проверяем, что токен был получен
+    });
+
+    it("should return error if email already exists", async () => {
+      const existingUser = {
+        username: "testuser",
+        email: "testuser@example.com",
+        password: "password123",
+      };
+
+      // Сначала регистрируем пользователя
+      await request(app).post("/register").send(existingUser);
+
+      // Пытаемся зарегистрировать того же пользователя снова
+      const response = await request(app).post("/register").send(existingUser);
+
+      expect(response.status).toBe(200);
+      expect(response.body.success).toBe(false);
+      expect(response.body.message).toBe(
+        "Пользователь с таким email уже существует."
+      );
+    });
+  });
+
   // Хук afterAll для закрытия соединения с базой данных после всех тестов
   afterAll(async () => {
     await pool.end(); // Закрытие соединения с базой данных
+    console.log("Connection to the database closed.");
   });
 });

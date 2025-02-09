@@ -1,21 +1,13 @@
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
-const { Pool } = require("pg");
+const { pool } = require("./db"); // Вместо создания нового pool
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const YAML = require("yamljs");
 const verifyToken = require("./middleware/auth");
-
-const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "CarDealership",
-  password: "root",
-  port: 5432,
-});
 
 const app = express();
 
@@ -70,7 +62,7 @@ app.post("/register", async (req, res) => {
     }
 
     // Хешируем пароль
-    const hashedPassword = await bcrypt.hash(password, 10); // 10 - это соль
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     // Добавление нового пользователя в базу данных
     const query = `
