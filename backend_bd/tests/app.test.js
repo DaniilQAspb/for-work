@@ -13,13 +13,18 @@ describe("Тесты API", () => {
 
   // Тест для регистрации пользователя
   describe("POST /register", () => {
-    it("should register a new user successfully", async () => {
-      const newUser = {
-        username: "testuser",
-        email: "testuser@example.com",
-        password: "password123",
-      };
+    const newUser = {
+      username: "testuser",
+      email: "testuser@example.com",
+      password: "password123",
+    };
 
+    beforeEach(async () => {
+      // Очистка таблицы пользователей перед каждым тестом (если требуется)
+      await pool.query("DELETE FROM users WHERE email = $1", [newUser.email]);
+    });
+
+    it("should register a new user successfully", async () => {
       const response = await request(app).post("/register").send(newUser);
 
       expect(response.status).toBe(200);
@@ -31,19 +36,13 @@ describe("Тесты API", () => {
     });
 
     it("should return error if email already exists", async () => {
-      const existingUser = {
-        username: "testuser",
-        email: "testuser@example.com",
-        password: "password123",
-      };
-
       // Сначала регистрируем пользователя
-      await request(app).post("/register").send(existingUser);
+      await request(app).post("/register").send(newUser);
 
       // Пытаемся зарегистрировать того же пользователя снова
-      const response = await request(app).post("/register").send(existingUser);
+      const response = await request(app).post("/register").send(newUser);
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(400); // Исправлено на 400
       expect(response.body.success).toBe(false);
       expect(response.body.message).toBe(
         "Пользователь с таким email уже существует."
