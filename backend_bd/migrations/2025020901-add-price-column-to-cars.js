@@ -10,7 +10,7 @@ module.exports = {
     );
 
     if (result[0].length === 0) {
-      await queryInterface.addColumn("public.cars", "price", {
+      await queryInterface.addColumn("cars", "price", {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: true,
       });
@@ -21,7 +21,7 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.removeColumn("public.cars", "price");
+    await queryInterface.removeColumn("cars", "price");
     console.log("Столбец 'price' удалён из таблицы 'cars'.");
   },
 };
