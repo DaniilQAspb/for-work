@@ -54,34 +54,14 @@ jobs:
           done
           echo "PostgreSQL failed to start" && exit 1
 
-      - name: Check DB connection and tables
+      - name: Check environment variables
         run: |
-          cd backend_bd
-          echo "Checking database connection and tables..."
-          node -e "
-            const { Sequelize } = require('sequelize');
-            const sequelize = new Sequelize({
-              host: 'localhost',
-              port: 5432,
-              dialect: 'postgres',
-              username: 'postgres',
-              password: 'root',
-              database: 'CarDealership_test'
-            });
-            sequelize.authenticate()
-              .then(() => console.log('Connection established successfully.'))
-              .catch(err => console.error('Unable to connect to the database:', err));
-            sequelize.query('SELECT table_name FROM information_schema.tables WHERE table_schema=\'public\'')
-              .then(result => {
-                console.log('Tables in the database:', result[0]);
-              });
-          "
-        env:
-          DB_USER: postgres
-          DB_PASSWORD: root
-          DB_NAME: CarDealership_test
-          DB_HOST: localhost
-          DB_PORT: 5432
+          echo "NODE_ENV: $NODE_ENV"
+          echo "DB_USER: $DB_USER"
+          echo "DB_PASSWORD: $DB_PASSWORD"
+          echo "DB_NAME: $DB_NAME"
+          echo "DB_HOST: $DB_HOST"
+          echo "DB_PORT: $DB_PORT"
 
       - name: Setup test database (if migrations exist)
         run: |
