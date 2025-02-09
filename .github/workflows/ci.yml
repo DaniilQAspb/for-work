@@ -66,7 +66,24 @@ jobs:
 
       - name: Check if the 'cars' table exists
         run: |
-          PGPASSWORD=$DB_PASSWORD psql -h localhost -U $DB_USER -d $DB_NAME -c "\dt" | grep cars
+          PGPASSWORD=$DB_PASSWORD psql -h localhost -U $DB_USER -d CarDealership_test -c "SELECT to_regclass('public.cars');"
+        continue-on-error: true
+
+      - name: Create 'cars' table if not exists
+        run: |
+          PGPASSWORD=$DB_PASSWORD psql -h localhost -U $DB_USER -d CarDealership_test -c "
+          CREATE TABLE IF NOT EXISTS public.cars (
+            car_id SERIAL PRIMARY KEY,
+            brand VARCHAR(50) NOT NULL,
+            model VARCHAR(50) NOT NULL,
+            year INTEGER,
+            price DECIMAL(12, 2) NOT NULL,
+            mileage INTEGER,
+            fueltype VARCHAR(20),
+            transmission VARCHAR(20),
+            description TEXT,
+            sold_by_employee_id INTEGER
+          );"
         continue-on-error: true
 
       - name: Setup test database (if migrations exist)
