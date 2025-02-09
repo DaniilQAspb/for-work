@@ -45,51 +45,60 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(publicDir, "index.html"));
 });
 
-// Регистрируем нового пользователя
 app.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
 
+  if (!username || !email || !password) {
+    return res.status(400).json({
+      success: false,
+      message: "Все поля (username, email, password) обязательны.",
+    });
+  }
+
   try {
-    // Проверка, существует ли уже пользователь с таким email
     const checkUserQuery = "SELECT * FROM users WHERE email = $1";
     const result = await pool.query(checkUserQuery, [email]);
 
     if (result.rows.length > 0) {
-      return res.json({
+      return res.status(400).json({
         success: false,
         message: "Пользователь с таким email уже существует.",
       });
     }
 
-    // Хешируем пароль
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Добавление нового пользователя в базу данных
     const query = `
       INSERT INTO users (username, email, password)
       VALUES ($1, $2, $3)
-      RETURNING *;
+      RETURNING id, username, email;
     `;
     const newUser = await pool.query(query, [username, email, hashedPassword]);
 
-    // Генерация JWT токена
-    const token = jwt.sign(
-      { userId: newUser.rows[0].user_id }, // Включаем userId в токен
-      "your_jwt_secret", // Секретный ключ для генерации токена
-      { expiresIn: "1h" } // Время жизни токена
-    );
+    const userId = newUser.rows[0].id; // Проверить название ID в БД
+    const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
 
-    res.json({
+    res.status(201).json({
       success: true,
       message: "Пользователь успешно зарегистрирован.",
       user: newUser.rows[0],
-      token, // Возвращаем токен в ответе
+      token,
     });
   } catch (err) {
     console.error("Ошибка при регистрации пользователя:", err.message);
+
+    if (err.code === "23505") {
+      return res.status(400).json({
+        success: false,
+        message: "Пользователь с таким email уже существует.",
+      });
+    }
+
     res.status(500).json({
       success: false,
-      message: "Ошибка при регистрации пользователя.",
+      message: "Внутренняя ошибка сервера.",
     });
   }
 });
