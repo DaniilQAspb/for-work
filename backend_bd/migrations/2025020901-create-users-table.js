@@ -23,17 +23,17 @@ module.exports = {
       role_name: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: "seller", // дефолтное значение для role_name
+        defaultValue: "seller", // Дефолтное значение для роли
       },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: Sequelize.NOW,
+        defaultValue: Sequelize.NOW, // Дефолтное значение
       },
       updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: Sequelize.NOW,
+        defaultValue: Sequelize.NOW, // Дефолтное значение
       },
     });
     console.log("Таблица 'users' была создана.");
