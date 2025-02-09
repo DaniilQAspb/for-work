@@ -16,9 +16,9 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_USER: testuser
-          POSTGRES_PASSWORD: testpassword
-          POSTGRES_DB: db_test
+          POSTGRES_USER: postgres # Используем ваш основной пользователь базы данных
+          POSTGRES_PASSWORD: root # Пароль для подключения
+          POSTGRES_DB: CarDealership_test # Имя тестовой базы данных
         ports:
           - 5432:5432
         options: >-
@@ -56,9 +56,9 @@ jobs:
           npm run db:migrate
         env:
           NODE_ENV: test
-          DB_USER: testuser
-          DB_PASSWORD: testpassword
-          DB_NAME: db_test
+          DB_USER: postgres
+          DB_PASSWORD: root
+          DB_NAME: CarDealership_test
           DB_HOST: localhost
           DB_PORT: 5432
 
@@ -68,8 +68,8 @@ jobs:
           npm test
         env:
           NODE_ENV: test
-          DB_USER: testuser
-          DB_PASSWORD: testpassword
-          DB_NAME: db_test
+          DB_USER: postgres
+          DB_PASSWORD: root
+          DB_NAME: CarDealership_test
           DB_HOST: localhost
           DB_PORT: 5432
