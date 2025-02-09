@@ -78,7 +78,7 @@ jobs:
       - name: Run API tests
         run: |
           cd backend_bd
-          npm test
+          npx cross-env NODE_ENV=test jest
         env:
           NODE_ENV: test
           DB_USER: postgres
