@@ -45,6 +45,7 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(publicDir, "index.html"));
 });
 
+// Регистрация пользователя
 app.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -71,11 +72,11 @@ app.post("/register", async (req, res) => {
     const query = `
       INSERT INTO users (username, email, password)
       VALUES ($1, $2, $3)
-      RETURNING id, username, email;
+      RETURNING user_id, username, email;
     `;
     const newUser = await pool.query(query, [username, email, hashedPassword]);
 
-    const userId = newUser.rows[0].id; // Проверить название ID в БД
+    const userId = newUser.rows[0].user_id; // Исправлено с id на user_id
     const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
