@@ -41,9 +41,9 @@ jobs:
           cd backend_bd
           npm install
 
-      # Убедитесь, что у sequelize-cli есть права на выполнение
-      - name: Fix permissions for sequelize-cli
-        run: sudo chmod -R 755 ./node_modules/.bin/sequelize-cli
+      - name: Install sequelize-cli globally
+        run: |
+          npm install -g sequelize-cli
 
       - name: Wait for PostgreSQL to be ready
         run: |
@@ -57,7 +57,7 @@ jobs:
       - name: Setup test database (if migrations exist)
         run: |
           cd backend_bd
-          npx sequelize-cli db:migrate --env test
+          sequelize-cli db:migrate --env test
         env:
           NODE_ENV: test
           DB_USER: postgres
