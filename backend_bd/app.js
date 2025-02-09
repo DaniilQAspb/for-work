@@ -429,6 +429,12 @@ app.delete("/delete-user/:id", verifyToken, async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Сервер запущен на http://localhost:${PORT}`);
-});
+// Экспортируем приложение для тестов
+if (require.main === module) {
+  const PORT = 3000;
+  app.listen(PORT, () => {
+    console.log(`Сервер запущен на http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app; // Экспортируем приложение для тестов
