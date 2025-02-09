@@ -27,12 +27,12 @@ module.exports = {
       },
       createdAt: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: true, // Сделано allowNull: true, чтобы не было ошибки
         defaultValue: Sequelize.NOW, // Дефолтное значение
       },
       updatedAt: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: true,
         defaultValue: Sequelize.NOW, // Дефолтное значение
       },
     });
